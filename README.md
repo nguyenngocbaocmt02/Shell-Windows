@@ -1,2 +1,3 @@
-# B-o
-Tèo
+# Bio
+Project created by Ngocbao Nguyen - master in OS...
+Supported by Truong Vu, Bang Nguyen and Hao NQ.
