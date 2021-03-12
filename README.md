@@ -1,2 +1,2 @@
 # Bio
-Project created by Ngocbao Nguyen, Truong Vu, Bang Nguyen and Hao NQ.
+Project created by Ngocbao Nguyen, Truong Vu Ba, Bang Nguyen and Hao Nguyen Ba.
