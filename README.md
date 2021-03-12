@@ -1,3 +1,2 @@
 # Bio
-Project created by Ngocbao Nguyen - master in OS...
-Supported by Truong Vu, Bang Nguyen and Hao NQ.
+Project created by Ngocbao Nguyen, Truong Vu, Bang Nguyen and Hao NQ.
