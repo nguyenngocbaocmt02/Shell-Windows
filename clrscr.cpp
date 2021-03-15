@@ -29,4 +29,5 @@ void myCreateProcess1(char* duongDan) {
 int main() {
 	system("cls");
 	myCreateProcess1("welcome.exe");
+	myCreateProcess1("help.exe");
 }

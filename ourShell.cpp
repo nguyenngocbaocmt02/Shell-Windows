@@ -39,10 +39,15 @@ int main() {
 	 demand.insert( std::make_pair<string, char*>( "clear", "clrscr.exe" ) );
 	 string dm;
 	 int t=6;
-	 myCreateProcess(demand["welcome"]);
+	 myCreateProcess(demand["clear"]);
 	 while(t--) {
 	 	cout<<endl<<"Xin moi nhap yeu cau cua ban: ";
 	 	cin>>dm;
+	 	if(demand[dm]== NULL) {
+	 		cout<<"The command isn't available";
+	 		continue;
+	 	}
+	 	cout<<"The command is accepted!"<<endl;
 	 	myCreateProcess(demand[dm]);
 	 }
 	 return(0);
