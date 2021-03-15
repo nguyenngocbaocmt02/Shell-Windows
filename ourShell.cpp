@@ -18,15 +18,11 @@ void myCreateProcess(char* duongDan) {
         NULL,          
         NULL,       
         &si,           
-        &pi ) ;	
+        &pi ) ;
 	if (bProcess ==FALSE) {
 		cout<<"Failed to create Process "<< GetLastError()<<endl;
-		cout<<"Ban da nhap sai cu phap duoc ho tro"<<endl;
-		return;
+		cout<<"Please enter 'help' for more command"<<endl;
 	}
-	cout<<"Success to create"<<endl;
-	cout<<"Process ID= "<<pi.dwProcessId<<endl;
-	cout<<"Thread ID= "<< pi.dwThreadId<<endl;
 	WaitForSingleObject(pi.hProcess,INFINITE);
 	CloseHandle(pi.hProcess);
 	CloseHandle(pi.hThread);
@@ -36,11 +32,13 @@ int main() {
 	 demand.insert( std::make_pair<string, char*>("checkModule", "checkmodule.exe" ) );
 	 demand.insert( std::make_pair<string, char*>("checkThread", "checkthread.exe" ) );
 	 demand.insert( std::make_pair<string, char*>( "checkProcess", "checkprocess.exe" ) );
-	 demand.insert( std::make_pair<string, char*>( "untitled1", "Untitled1.exe" ) );
+	 demand.insert( std::make_pair<string, char*>( "killProcess", "killprocess.exe" ) );
 	 demand.insert( std::make_pair<string, char*>( "help", "help.exe" ) );
 	 demand.insert( std::make_pair<string, char*>( "welcome", "welcome.exe" ) );
+	 demand.insert( std::make_pair<string, char*>( "calculator", "calc.exe" ) );
+	 demand.insert( std::make_pair<string, char*>( "clear", "clrscr.exe" ) );
 	 string dm;
-	 int t=3;
+	 int t=6;
 	 myCreateProcess(demand["welcome"]);
 	 while(t--) {
 	 	cout<<endl<<"Xin moi nhap yeu cau cua ban: ";

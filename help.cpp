@@ -6,5 +6,7 @@ int main() {
 	cout<<"2. checkProcess"<<endl;
 	cout<<"3. checkThread"<<endl;
 	cout<<"4. checkModule"<<endl;
-	cout<<"5. untitled1"<<endl;
+	cout<<"6. calculator"<<endl;
+	cout<<"7. clear"<<endl;
+	cout<<"8. killProcess"<<endl;
 }
