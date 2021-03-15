@@ -3,8 +3,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 void myCreateProcess(char* duongDan) {
-	HANDLE hProcess=0;
-	HANDLE hThread=0;
 	STARTUPINFO si;
     PROCESS_INFORMATION pi;
 	DWORD dwProcessID=0;
@@ -20,10 +18,11 @@ void myCreateProcess(char* duongDan) {
         NULL,          
         NULL,       
         &si,           
-        &pi ) ;
+        &pi ) ;	
 	if (bProcess ==FALSE) {
 		cout<<"Failed to create Process "<< GetLastError()<<endl;
 		cout<<"Ban da nhap sai cu phap duoc ho tro"<<endl;
+		return;
 	}
 	cout<<"Success to create"<<endl;
 	cout<<"Process ID= "<<pi.dwProcessId<<endl;
