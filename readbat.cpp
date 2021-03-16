@@ -58,7 +58,7 @@ int main ()
    	
    	infile >> data; 
    	if (infile.eof()) break;
-    myCreateProcess(demand[data]);  
+        myCreateProcess(demand[data]);  
    
    } while (!infile.eof());
    
@@ -67,5 +67,5 @@ int main ()
    infile.close();
 
 
-	return 0;
+   return 0;
 }
