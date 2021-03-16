@@ -37,6 +37,7 @@ int main() {
 	 demand.insert( std::make_pair<string, char*>( "welcome", "welcome.exe" ) );
 	 demand.insert( std::make_pair<string, char*>( "calculator", "calc.exe" ) );
 	 demand.insert( std::make_pair<string, char*>( "clear", "clrscr.exe" ) );
+	 demand.insert( std::make_pair<string, char*>( "readBat", "readbat.exe" ) );
 	 string dm;
 	 int t=6;
 	 myCreateProcess(demand["clear"]);
