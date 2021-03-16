@@ -59,6 +59,7 @@ int main ()
    	infile >> data; 
    	if (infile.eof()) break;
         myCreateProcess(demand[data]);  
+	cout << "#############################################" << endl; 
    
    } while (!infile.eof());
    
