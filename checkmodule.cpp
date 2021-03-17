@@ -2,9 +2,19 @@
 #include <tlhelp32.h>
 #include <iostream>
 #include <string>
-
+#include <bits/stdc++.h>
 using namespace std;
 int main() {
+	set <string>  processList;
+	processList.insert( "ourShell.exe" ); 
+	 processList.insert( "checkmodule.exe" );  
+	 processList.insert(  "checkthread.exe" );
+	 processList.insert( "checkprocess.exe" );
+	 processList.insert( "killprocess.exe" );
+	 processList.insert( "help.exe" );
+	 processList.insert(  "Calculator.exe" );
+	 processList.insert("clrscr.exe"  );
+	 processList.insert( "clock.exe" );
 	cout<<"------------------MODULE LISTING------------------"<<endl;
 	HANDLE hSnapShot =INVALID_HANDLE_VALUE;
 	MODULEENTRY32 ModuleInfo ={0};
@@ -15,8 +25,8 @@ int main() {
 		cout<<"CreatToolhelp32SnapShot Function Failed" <<endl;
 		cout<< "Error No - "<<GetLastError()<<endl;
 	}
-	cout<<"CreateToolhelp32Snapshot Function Success"<< endl;
 	while(Module32Next(hSnapShot, &ModuleInfo) !=FALSE) {
+		if(processList.find(ModuleInfo.szExePath)==processList.end()) continue;
 		cout<<"---------------------------------------"<<endl;
 		cout<<"\t MODULE NO - "<<++count<<endl;
 		cout<<"---------------------------------------"<<endl;
@@ -32,5 +42,6 @@ int main() {
 		cout<<"PROCESS MODULE ID - "<<ModuleInfo.th32ProcessID<<endl;
 	}
 	CloseHandle(hSnapShot);
-	cout<<"-------------------------------";
+	return 0;
+
 }

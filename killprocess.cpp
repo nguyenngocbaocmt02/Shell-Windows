@@ -8,20 +8,33 @@
 #include <algorithm>    // include algorithm header file (needed for operations such as sort)
 using namespace std; //use std for namespace
 bool compareFunction (std::string a, std::string b); // call to function which sorts strings in alphabetic order (where sorting is applied as if inputs are all lower-case)
-
+void SetTeColor(WORD color)
+{ 
+    HANDLE hConsoleOutput;
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO screen_buffer_info;
+    GetConsoleScreenBufferInfo(hConsoleOutput, &screen_buffer_info);
+    WORD wAttributes = screen_buffer_info.wAttributes;
+    color &= 0x000f;
+    wAttributes &= 0xfff0; wAttributes |= color;
+    SetConsoleTextAttribute(hConsoleOutput, wAttributes);
+}
 int main( ){ // main program @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	// INTRODUCTION STRING #############################################################################################
+	set <string>  processList;
+	processList.insert( "ourShell.exe" ); 
+	 processList.insert( "checkmodule.exe" );  
+	 processList.insert(  "checkthread.exe" );
+	 processList.insert( "checkprocess.exe" );
+	 processList.insert( "killprocess.exe" );
+	 processList.insert( "help.exe" );
+	 processList.insert(  "Calculator.exe" );
+	 processList.insert("clrscr.exe"  );
+	 processList.insert( "clock.exe" );
 	cout<<"################################################################################"<<endl; // string added for ui purposes
 	cout<<"######################### Task Process Terminator ##############################"<<endl; // string added for ui purposes
 	cout<<"################################################################################"<<endl; // string added for ui purposes
 	cout<<""<<endl;
-	cout<<"Description:"<<endl; // string added for UI purposes
-	cout<<"  This program will list processes currently running on your computer and then  "<<endl; // string added for UI purposes
-	cout<<"  by entering a process handle name (i.e-'chrome.exe'); the program will kill "<<endl; // string added for UI purposes
-	cout<<"  all processes of the same handle name."<<endl; // string added for UI purposes
-	cout<<""<<endl; // string added for UI purposes
-	system("pause"); // wait for user to press key before continUIng code
-	//##################################################################################################################
 	cout<<""<<endl;
 	cout<<""<<endl;
 	int run_this_program=1; //parameter which determines if program will keep running
@@ -77,21 +90,21 @@ int main( ){ // main program @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 		
 		// Print unique processes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		cout<<"Processes that are running$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"<<endl; // string added for UI purposes
+		SetTeColor(2);
+		cout<<"---------------Processes that are running------------------"<<endl; // string added for UI purposes
+		cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"<<endl;
 		cout<<"PROCESS NAME || Number of processes of same name                                "<<endl; // string added for UI purposes
 		for(int k=0;k<=(process_name_unique.size()-1);k++){ // for each kth element in sorted list of process names
+		    	if(processList.find(process_name_unique[k])==processList.end()) continue;
 			cout<<process_name_unique[k]; // print kth process name
 			cout<<" || "<<process_num_occur_sorted[k]<<endl; // print number of occurances for kth process name (also previously assorted correspondingly with vector above)
 		};
-		cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"<<endl; // string added for UI purposes
+		cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"<<endl; // string added for UI purposes
+		SetTeColor(15);
 		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		
-		cout<<"ABOVE: list of names of processes that are currently running, along with number"<<endl; // string added for UI purposes
-		cout<<"        of occurances for handle name."<<endl; // string added for UI purposes
-		cout<<""<<endl; // string added for UI purposes
-		string p2t; // initialise string which will process handle name of process/s to terminate (user will define this below)
-		cout<<"Below, enter the name of the process that you want to terminate;"<<endl; // string added for UI purposes
-		cout<<"for example, enter 'chrome.exe' to terminate all processes of that handle name."<<endl; // string added for UI purposes
+	    string p2t;
+	    cout<<endl<<endl;
+		cout<<"For example, enter 'chrome.exe' to terminate all processes of that handle name."<<endl; // string added for UI purposes
 		cout<<"(exit the program if you do not wish to progress)"<<endl; // string added for UI purposes
 		cout<<""<<endl; // string added for UI purposes
 		cout<<"Process (name) to terminate:"; // string added for UI purposes
@@ -101,7 +114,7 @@ int main( ){ // main program @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		system(cmmdtsk.c_str()); //c_str() converts cmmdtsk to c string
 		cout<<""<<endl; // string added for UI purposes
 		cout<<""<<endl; // string added for UI purposes
-		
+		return 0;
 }// end of main program @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 

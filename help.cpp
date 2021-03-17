@@ -9,4 +9,7 @@ int main() {
 	cout<<"6. calculator"<<endl;
 	cout<<"7. clear"<<endl;
 	cout<<"8. killProcess"<<endl;
+	cout<<"9. clock"<<endl;
+	cout<<"10. exit"<<endl;
+    return 0;
 }
