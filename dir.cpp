@@ -6,7 +6,8 @@ using namespace std;
 int main(){
     cout << "Input path: ";
     string path;
-    cin >> path;
+    getline(cin, path);
+    cout << path;
     DIR* dir;
     dirent* pdir;
     vector<string> files;

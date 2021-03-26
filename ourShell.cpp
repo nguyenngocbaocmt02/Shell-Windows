@@ -157,6 +157,7 @@ void pause(){
         } while( Process32Next( hSnapShot, &ProcessInfo ) );
     }
     if (count==0) cout<<"No child processes!"<<endl;
+	else {
 	cout<<"Enter the process name to pause: ";
 	fflush(stdin);
 	gets(pname);
@@ -172,6 +173,7 @@ void pause(){
             }
         }while( Process32Next( hSnapShot, &ProcessInfo ) );
     }
+	}
     CloseHandle(hSnapShot);
 	CloseHandle(&ProcessInfo);
 }
@@ -273,7 +275,6 @@ void killProcess(){
 		while( Process32Next( hProcessSnap, &pe32 ) ){ //for each object (pe32) in hprocesssnap [Process32Next runs through processes]
 			process_name.push_back(pe32.szExeFile); // add process name to list of processes		
 		};
-		//##################################################################################
 		// Get list of unique process names and number of times that process name has process$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 		vector <string> process_name_unique; //initialize vector of string elements (each element will be unique process name)
 		vector <int> process_num_occur; //initialize vector of integer elements (each element will be count that unique process has occured)
