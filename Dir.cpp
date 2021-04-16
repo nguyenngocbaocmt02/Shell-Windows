@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include<vector>
 #include<dirent.h>
 #include<iostream>
 using namespace std;
@@ -6,7 +6,8 @@ using namespace std;
 int main(){
     cout << "Input path: ";
     string path;
-    cin >> path;
+    getline(cin, path);
+    cout << path;
     DIR* dir;
     dirent* pdir;
     vector<string> files;
@@ -17,4 +18,6 @@ int main(){
     for(int i = 0; i < files.size(); ++i){
         cout << files[i] << '\n';
     }
+    system("pause");
+    return 0;
 }

@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include<vector>
 #include<dirent.h>
 #include<iostream>
 using namespace std;

@@ -1,18 +1,21 @@
 #include <windows.h>
 #include <stdio.h>
 #include <conio.h>
-#include <bits/stdc++.h>
+#include<iostream>
 #include <tlhelp32.h> 
 #include<vector>
 #include <tchar.h>
+#include <algorithm>
 #include<debugapi.h>
+#include<set>
+#include<map>
 #include <processthreadsapi.h>
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #define MAX_PROCESS_RUNNING 100
 using namespace std;
 PROCESS_INFORMATION pi[MAX_PROCESS_RUNNING];
 vector <PROCESSENTRY32> PE;
-set <string>  processList;
+set<string>  processList;
 int countProc=0;
 bool compareFunction (std::string a, std::string b){ 
 	for(int k=0;k<=a.size()-1;k++){ 
@@ -79,16 +82,30 @@ void myCreateProcessOBO(char* path) {
 	cout<<"Process ID = "<<pi.dwProcessId<<endl;
 	cout<<"Thread ID = "<< pi.dwThreadId<<endl;
 	}
-	while(getch()!=27) {
-			cout<<"In OBO mode, you can press Esc to exit!"<<endl;
+	char a;
+	while(1) {
+		a=getch();
+		if (a!=27 && a!=115)
+			cout<<"In OBO mode, you can press Esc to exit current process or press 's' to switch to Parallel mode!"<<endl;
+		else break;
 	} 
-	kill(path);
+	if (a==27)
+		kill(path);
 	CloseHandle(pi.hProcess);
 	CloseHandle(pi.hThread);
 	
 }
+
+bool find(PROCESSENTRY32 p){
+	for (int i=0;i<PE.size();i++){
+		if (PE[i].th32ProcessID==p.th32ProcessID)
+			return true;
+	return false;
+	}
+}
+
 void checkProcess() {
-	cout<<"------------------PROCESS LISTING------------------"<<endl;
+	cout<<"------------------------------------------PROCESS LISTING-------------------------------------------"<<endl;
 	HANDLE hSnapShot =INVALID_HANDLE_VALUE;
 	PROCESSENTRY32 ProcessInfo ={0};
 	ProcessInfo.dwSize =sizeof(PROCESSENTRY32);
@@ -99,17 +116,16 @@ void checkProcess() {
 		cout<< "Error No - "<<GetLastError()<<endl;
 	}
 	DWORD exitCode=0;
+	cout<<"No.\t Number of Threads\tExecution File\t\tPPID\t\t PID\t\tStatus"<<endl;
 	while(Process32Next(hSnapShot, &ProcessInfo) !=FALSE) {
 		if(processList.find(ProcessInfo.szExeFile)==processList.end()) continue;
-		cout<<"---------------------------------------"<<endl;
-		cout<<"\t PROCESS NO - "<<++count<<endl;
-		cout<<"---------------------------------------"<<endl;
-		cout<<"NO. OF THREAD - "<< ProcessInfo.cntThreads<<endl;
-		cout<<"SIZE - "<< ProcessInfo.dwSize<<endl;
-		cout<<"BASE PRIORITY - "<< ProcessInfo.pcPriClassBase<<endl;
-		wcout<<"EXECUTABLE FILE - "<< ProcessInfo.szExeFile<<endl;
-		cout<<"PPID - "<< ProcessInfo.th32ParentProcessID<<endl;
-		cout<<"PPID - "<< ProcessInfo.th32ProcessID<<endl;
+		cout<<"----------------------------------------------------------------------------------------------------"<<endl;
+		if (find(ProcessInfo))
+			cout<<++count<<".\t\t"<<ProcessInfo.cntThreads<<"\t\t"<<ProcessInfo.szExeFile<<"\t\t"<<ProcessInfo.th32ParentProcessID<<"\t\t"<<ProcessInfo.th32ProcessID<<"\t\tPending"<<endl;
+		else
+			cout<<++count<<".\t\t"<<ProcessInfo.cntThreads<<"\t\t"<<ProcessInfo.szExeFile<<"\t\t"<<ProcessInfo.th32ParentProcessID<<"\t\t"<<ProcessInfo.th32ProcessID<<"\t\tRunning"<<endl;
+		cout<<"----------------------------------------------------------------------------------------------------"<<endl;
+
 		}
 	CloseHandle(hSnapShot);
 }
@@ -151,12 +167,12 @@ void pause(){
 	if( Process32First( hSnapShot, &ProcessInfo ) )
     {
         do{
-             	if(processList.find(ProcessInfo.szExeFile)==processList.end()) continue;
+             	if(processList.find(ProcessInfo.szExeFile)==processList.end() || find(ProcessInfo)) continue;
              	if(ProcessInfo.szExeFile==name) continue;
 				cout<<++count<<". "<<ProcessInfo.szExeFile<<" - PID: "<< ProcessInfo.th32ProcessID<<endl;
         } while( Process32Next( hSnapShot, &ProcessInfo ) );
     }
-    if (count==0) cout<<"No child processes!"<<endl;
+    if (count==0) cout<<"No running child processes!"<<endl;
 	else {
 	cout<<"Enter the process name to pause: ";
 	fflush(stdin);
@@ -302,7 +318,7 @@ void killProcess(){
 		vector <string> process_name_unique_unsorted; //initialize vector that will be unsorted vector of process names;
 		vector <int> process_num_occur_sorted; //initialize vector that will be unsorted vector of process names;
 		for(int k=0;k!=process_name_unique.size();k++) process_name_unique_unsorted.push_back(process_name_unique[k]); //add elements from original list to new list [for loop in one line]
-		std::sort(process_name_unique.begin(),process_name_unique.end(),compareFunction); // sortvector using compare function (output is that process_name_unique is sorted alphabetically using function "compareFunction")
+		sort(process_name_unique.begin(),process_name_unique.end(),compareFunction); // sortvector using compare function (output is that process_name_unique is sorted alphabetically using function "compareFunction")
 		// sort process_num_occur alphabetically and as new vector "process_num_occur_sorted" (previously initialized but is still empty@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		for(int k=0;k!=process_name_unique.size();k++) for(int j=0;j!=process_name_unique.size();j++){ // for each element of sorted(k) and unsorted (j) for process name [Double for loop defined in one line]
 			if(strcmp(process_name_unique[k].c_str(),process_name_unique_unsorted[j].c_str())==0) process_num_occur_sorted.push_back(process_num_occur[j]); //if string of kth string (sorted) and jth string (unsorted) match;
@@ -364,7 +380,7 @@ int main() {
 	 clear();
 	 char a;
 	 while(true) {
-	 	cout<<endl<<"--------------------------------------------------------"<<endl<<"Enter command: ";
+	 	cout<<endl<<"Enter command: ";
 	 	cin>>dm;
 	 	if(dm=="exit") break;
 	 	if(demand.find(dm)==demand.end()) {
